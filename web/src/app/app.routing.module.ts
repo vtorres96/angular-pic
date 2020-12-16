@@ -1,34 +1,38 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 
 import { PhotoListComponent } from './photos/photo-list/photo-list.component';
 import { PhotoFormComponent } from './photos/photo-form/photo-form.component';
 import { NotFoundComponent } from './errors/not-found/not-found.component';
-import { PhotoListResolver } from './photos/photo-list/photo-list.resolver';
+import { PhotoListResolve } from './photos/photo-list/photo-list.resolve';
+import { SignInComponent } from './home/sign-in/sign-in.component';
 
 const routes: Routes = [
-    { 
-        path: 'user/:userName', 
+    {
+        path: '',
+        component: SignInComponent
+    }, {
+        path: 'photos/user/:username',
         component: PhotoListComponent,
         resolve: {
-            photos: PhotoListResolver
+            photos: PhotoListResolve
         }
-    },
-    { 
-        path: 'p/add', 
-        component: PhotoFormComponent 
-    },
-    { 
-        path: '**', 
-        component: NotFoundComponent 
-    }  
+    }, {
+        path: 'photos/add',
+        component: PhotoFormComponent
+    }, {
+        path: '**',
+        component: NotFoundComponent
+    }
 ];
 
 @NgModule({
-    imports: [ 
-        RouterModule.forRoot(routes) 
+    imports: [
+        RouterModule.forRoot(routes)
     ],
-    exports: [ RouterModule ]
+    exports: [
+        RouterModule
+    ]
 })
-export class AppRoutingModule { }
-
+export class AppRoutingModule {
+}
