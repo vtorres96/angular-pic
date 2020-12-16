@@ -1,0 +1,8 @@
+<div class="d-flex justify-content-center mt-3 mb-3">
+    <form class="w-50">
+        <input type="search" class="rounded w-100" placeholder="Search..." autofocus
+        (keyup)="debounce.next($event.target.value)"
+        [value]="value">
+        <i aria-hidden="true" class="fa fa-search"></i>
+    </form>
+</div>
