@@ -1,25 +1,32 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Photo } from './photo';
+import { Observable } from 'rxjs';
 
-import { Photo } from "./photo";
+const URL_API = 'http://localhost:3000/';
 
-const API = 'http://localhost:3000';
-
-@Injectable({ providedIn: 'root' })
+@Injectable({
+    providedIn: 'root'
+})
 export class PhotoService {
-
-    constructor(private http: HttpClient) {}
-
-    listFromUser(userName: string) {
-        return this.http
-            .get<Photo[]>(API + '/' + userName + '/photos');       
+    public constructor(private httpClient: HttpClient) {
     }
 
-    listFromUserPaginated(userName: string, page: number) {
-        const params = new HttpParams()
-            .append('page', page.toString());
+    /**
+     * List all photos' user.
+     * @param username
+     */
+    public listFromUser(username: string): Observable<Photo[]> {
+        return this.httpClient.get<Photo[]>(URL_API + username + '/photos');
+    }
 
-        return this.http
-            .get<Photo[]>(API + '/' + userName + '/photos', { params });       
-    }    
+    /**
+     * List all photos' user with paginate.
+     * @param username
+     * @param page
+     */
+    public listFromUserPaginated(username: string, page: number): Observable<Photo[]> {
+        const parameters = new HttpParams().append('page', page.toString());
+        return this.httpClient.get<Photo[]>(URL_API + username + '/photos', {params: parameters});
+    }
 }
